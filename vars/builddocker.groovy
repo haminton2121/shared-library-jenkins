@@ -5,18 +5,10 @@ def call() {
 //    def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
     
     // Ensure proper interpolation within the shell script
-    sh """
-        echo "Building Docker Image with version"
-        
-    // Load the Dockerfile from resources using the libraryResource step
     def dockerfile = libraryResource "docker/Dockerfile"
-    
-    // Optionally display the Dockerfile contents
-    echo "Dockerfile contents:\n${dockerfile}"
-    
-    // Write the Dockerfile to a temporary location in the workspace
     writeFile file: "${WORKSPACE}/Dockerfile", text: dockerfile
-        
+    sh """
+        echo "Building Docker Image with version"  
         # Display the Dockerfile contents (optional)
         cat Dockerfile
 
