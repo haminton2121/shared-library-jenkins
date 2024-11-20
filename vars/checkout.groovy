@@ -21,7 +21,7 @@ def call(Map config) {
         userRemoteConfigs: [
             [
                 credentialsId: config.credentialsId ?: 'hnguyen421_git',
-                url: "https://github.dxc.com/insurance/AsiaPolicyUI${service}"
+                url: "https://github.com/haminton2121/python_scripts.git"
             ]
         ]
     ])
