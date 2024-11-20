@@ -20,4 +20,3 @@ def buildBaseDocker(Map config) {
 
         """
     }
-}
