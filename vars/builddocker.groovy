@@ -9,7 +9,7 @@ def call() {
         echo "Building Docker Image with version"
         
     // Load the Dockerfile from resources using the libraryResource step
-    def dockerfile = libraryResource('docker/Dockerfile')
+    def dockerfile = libraryResource "docker/Dockerfile"
     
     // Optionally display the Dockerfile contents
     echo "Dockerfile contents:\n${dockerfile}"
