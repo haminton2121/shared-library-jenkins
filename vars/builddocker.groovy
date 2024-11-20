@@ -8,8 +8,14 @@ def call() {
     sh """
         echo "Building Docker Image with version"
         
-        # Change to the directory where the Dockerfile is located
-        cd ${WORKSPACE}/@libs/my-shared-library/resources/docker/ && ls -al
+    // Load the Dockerfile from resources using the libraryResource step
+    def dockerfile = libraryResource('docker/Dockerfile')
+    
+    // Optionally display the Dockerfile contents
+    echo "Dockerfile contents:\n${dockerfile}"
+    
+    // Write the Dockerfile to a temporary location in the workspace
+    writeFile file: "${WORKSPACE}/Dockerfile", text: dockerfile
         
         # Display the Dockerfile contents (optional)
         cat Dockerfile
