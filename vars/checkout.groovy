@@ -15,11 +15,11 @@ def call(Map config) {
         branch: targetBranch,
         credentialsId: credentialsId,
         changelog: false,  
-        poll: false  
-         extensions: [
+        poll: false,
+        extensions: [
             [
-                $class: 'RelativeTargetDirectory',  // Đặt thư mục đích
-                relativeTargetDir: targetDirectory  // Thư mục bạn muốn clone vào
+                $class: 'RelativeTargetDirectory', 
+                relativeTargetDir: targetDirectory  
             ]
         ]
     )
