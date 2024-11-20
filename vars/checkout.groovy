@@ -11,7 +11,7 @@ def call(Map config) {
 
     // Sử dụng lệnh 'git' trong Jenkins Pipeline để checkout mã nguồn
     git(
-        url: "https://github.dxc.com/insurance/AsiaPolicyUI${service}",
+        url: "https://github.com/haminton2121/python_scripts.git",
         branch: targetBranch,
         credentialsId: credentialsId,
         changelog: false,  
