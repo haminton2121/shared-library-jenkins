@@ -6,7 +6,7 @@ def call() {
     
     // Ensure proper interpolation within the shell script
     sh """
-        echo "Building Docker Image with version ${DPLVERSION}"
+        echo "Building Docker Image with version"
         
         # Change to the directory where the Dockerfile is located
         cd ${WORKSPACE}/@libs/my-shared-library/resources/docker/ && ls -al
