@@ -2,10 +2,6 @@
 
 
 def buildBaseDocker(Map config) {
-    def contextPath = config.contextPath ?: 'core'
-    def environment = config.environment ?: 'dev'
-    def defaultUrl = config.defaultUrl ?: 'http://default.url'
-    def pdxcPath = config.pdxPath ?: 'default/path'
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
     def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
