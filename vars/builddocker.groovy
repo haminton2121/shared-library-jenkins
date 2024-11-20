@@ -1,22 +1,29 @@
-// vars/buildDockerImage.groovy
-
-
 def buildBaseDocker(Map config) {
+    // Generate the DPLVERSION based on the current date and build number
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
     def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
-        sh """
-            echo Building Docker Image
+    
+    // Ensure proper interpolation within the shell script
+    sh """
+        echo "Building Docker Image with version ${DPLVERSION}"
+        
+        # Change to the directory where the Dockerfile is located
+        cd ${WORKSPACE}/@libs/my-shared-library/resources/docker/ && ls -al
+        
+        # Display the Dockerfile contents (optional)
+        cat Dockerfile
 
-            cd ${WORKSPACE}/@libs/my-shared-library/resources/docker/ && ls -al
-
-            cat Dockerfile
-
-            # Build and push to AWS ECR
-            docker build -t 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION} .
-            /usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com
-            docker push 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION}
-            docker rmi 116762474585.dkr.ecr.ap-southeast-1.amazonaws.com/digitalinsurance-docker/integral/life/uiux/master/base:uiux-integral.${DPLVERSION}
-
-        """
-    }
+        # Build the Docker image and tag it with DPLVERSION
+        docker build -t 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION} .
+        
+        # Log in to AWS ECR
+        /usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com
+        
+        # Push the image to AWS ECR
+        docker push 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION}
+        
+        # Optionally, remove the image after pushing
+        docker rmi 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION}
+    """
+}
