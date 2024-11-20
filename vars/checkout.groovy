@@ -4,25 +4,23 @@
 //                submoduleCfg: [], userRemoteConfigs: [[credentialsId: stageParams.credential_git , url: stageParams.url]]])
 //}
 def call(Map config) {
-    def targetBranch = config.targetBranch ?: 'main' // Default to 'main' if no branch provided
-    def service = config.service ?: 'defaultService' // Default service name if not provided
+    def targetBranch = config.targetBranch ?: 'main'  
+    def service = config.service ?: 'defaultService'  
+    def credentialsId = config.credentialsId ?: 'default-credentials'  
+    def targetDirectory = config.targetDirectory ?: "default-directory"  // Thư mục đích mặc định
 
-    checkout([
-        $class: 'GitSCM',
-        branches: [[name: "*/${targetBranch}"]],
-        doGenerateSubmoduleConfigurations: false,
-        extensions: [
+    // Sử dụng lệnh 'git' trong Jenkins Pipeline để checkout mã nguồn
+    git(
+        url: "https://github.dxc.com/insurance/AsiaPolicyUI${service}",
+        branch: targetBranch,
+        credentialsId: credentialsId,
+        changelog: false,  
+        poll: false  
+         extensions: [
             [
-                $class: 'RelativeTargetDirectory',
-                relativeTargetDir: "AsiaPolicyUI${service}"
-            ]
-        ],
-        submoduleCfg: [],
-        userRemoteConfigs: [
-            [
-                credentialsId: config.credentialsId ?: 'hnguyen421_git',
-                url: "https://github.com/haminton2121/python_scripts.git"
+                $class: 'RelativeTargetDirectory',  // Đặt thư mục đích
+                relativeTargetDir: targetDirectory  // Thư mục bạn muốn clone vào
             ]
         ]
-    ])
+    )
 }
