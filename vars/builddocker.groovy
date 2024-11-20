@@ -20,7 +20,7 @@ def buildBaseDocker(Map config) {
             docker build -t 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION} .
             /usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com
             docker push 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION}
-            docker rmi 116762474585.dkr.ecr.ap-southeast-1.amazonaws.com/digitalinsurance-docker/integral/life/uiux/master/base:uiux-integral.${environment}-${contextPath}
+            docker rmi 116762474585.dkr.ecr.ap-southeast-1.amazonaws.com/digitalinsurance-docker/integral/life/uiux/master/base:uiux-integral.${DPLVERSION}
 
         """
     }
