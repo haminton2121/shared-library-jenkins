@@ -1,4 +1,4 @@
-def buildBaseDocker() {
+def builddocker() {
     // Generate the DPLVERSION based on the current date and build number
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
