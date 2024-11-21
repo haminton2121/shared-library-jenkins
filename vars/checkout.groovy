@@ -7,9 +7,7 @@ def call(Map config) {
     def targetBranch = config.targetBranch ?: 'main'  
     def service = config.service ?: 'defaultService'  
     def credentialsId = config.credentialsId ?: 'default-credentials'  
-    def targetDirectory = config.targetDirectory ?: "default-directory"  // Thư mục đích mặc định
-
-    // Sử dụng lệnh 'git' trong Jenkins Pipeline để checkout mã nguồn
+    def targetDirectory = config.targetDirectory ?: "default-directory" 
     git(
         url: "https://github.com/haminton2121/python_scripts.git",
         branch: targetBranch,
