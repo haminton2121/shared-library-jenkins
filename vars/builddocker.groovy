@@ -1,5 +1,5 @@
 def call(Map config) {
-    awscredential.awscredential {
+    awscredential.awsCredentials {
         builddockerimage.call(config)
     }
 }
