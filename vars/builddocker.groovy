@@ -17,7 +17,7 @@ def call(Map config) {
         docker build -t ${registryUrl}/${pathImage}:${DPLVERSION} .
         
         # Log in to AWS ECR
-        /usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin ${registryUrl}
+        #/usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin ${registryUrl}
         
         # Push the image to AWS ECR
         docker push ${registryUrl}/${pathImage}:${DPLVERSION}
