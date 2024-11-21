@@ -3,7 +3,7 @@
 def call() {
 
     // Use withCredentials to bind AWS credentials from Jenkins to environment variables
-    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'my-aws-credential']]) {
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'my-aws-credentials']]) {
         // AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are now available as environment variables
         echo "AWS credentials are successfully set up."
         
