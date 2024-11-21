@@ -1,11 +1,9 @@
 def call(Map config) {
-    // Generate the DPLVERSION based on the current date and build number
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
     def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
     def registryUrl = config.registryUrl
     def pathImage = config.pathImage
-    // Ensure proper interpolation within the shell script
     def dockerfile = libraryResource "docker/Dockerfile"
     writeFile file: "${WORKSPACE}/Dockerfile", text: dockerfile
     def index = libraryResource "docker/index.html"
