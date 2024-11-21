@@ -1,5 +1,5 @@
 def awsCredentials(Closure body) {
-    withCredentials([[$class: 'accounttest', credentialsId: 'my-aws-credentials']]) {
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'my-aws-credentials']]) {
         body()
     }
 }
