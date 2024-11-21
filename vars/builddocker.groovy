@@ -1,9 +1,10 @@
-def call() {
+def call(Map config) {
     // Generate the DPLVERSION based on the current date and build number
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
     def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
-    
+    def registryUrl = config.registryUrl
+    def pathImage = config.pathImage
     // Ensure proper interpolation within the shell script
     def dockerfile = libraryResource "docker/Dockerfile"
     writeFile file: "${WORKSPACE}/Dockerfile", text: dockerfile
@@ -15,15 +16,15 @@ def call() {
         cat Dockerfile
 
         # Build the Docker image and tag it with ${DPLVERSION}
-        docker build -t 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION} .
+        docker build -t ${registryUrl}/${pathImage}:${DPLVERSION} .
         
         # Log in to AWS ECR
-        /usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com
+        /usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin ${registryUrl}
         
         # Push the image to AWS ECR
-        docker push 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION}
+        docker push ${registryUrl}/${pathImage}:${DPLVERSION}
         
         # Optionally, remove the image after pushing
-        docker rmi 975049929854.dkr.ecr.ap-southeast-1.amazonaws.com/hnguyen/test/nginx:${DPLVERSION}
+        docker rmi ${registryUrl}/${pathImage}:${DPLVERSION}
     """
 }
