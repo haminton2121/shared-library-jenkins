@@ -1,13 +1,6 @@
 package com.example
 
 class AwsHelper {
-    def getAwsCredentials() {
-
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'my-aws-credentials']]) {
-            echo "AWS credentials are successfully set up."
-        }
-    }
-
     def loginToECR() {
 
         sh """
