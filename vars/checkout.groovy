@@ -5,9 +5,10 @@
 //}
 def call(Map config) {
     def targetBranch = config.targetBranch ?: 'main'  
-    def service = config.service ?: 'defaultService'  
-    def credentialsId = config.credentialsId ?: 'default-credentials'  
-    def targetDirectory = config.targetDirectory ?: "default-directory" 
+    def service = config.service
+    def credentialsId = config.credentialsId
+    def targetDirectory = config.targetDirectory
+    def url = config.url
     git(
         url: "https://github.com/haminton2121/python_scripts.git",
         branch: targetBranch,
