@@ -8,7 +8,6 @@ def call(String registryUrl, String pathImage, String region) {
     writeFile file: "${WORKSPACE}/Dockerfile", text: dockerfile
     def index = libraryResource "docker/index.html"
     writeFile file: "${WORKSPACE}/index.html", text: index
-    awscre()
     sh """
         echo "Building Docker Image with version"  
         # Display the Dockerfile contents (optional)
