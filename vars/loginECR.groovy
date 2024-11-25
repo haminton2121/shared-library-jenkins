@@ -1,5 +1,5 @@
 // vars/awsUtils.groovy
-def call(String region, String imagePath) {
+def call(String region, String registryUrl) {
 
     // Use withCredentials to bind AWS credentials from Jenkins to environment variables
     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'my-aws-credentials']]) {
@@ -9,7 +9,7 @@ def call(String region, String imagePath) {
         // Log in to AWS ECR using the injected credentials
         sh """
             echo "Logging into AWS ECR..."
-            aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${imagePath}
+            aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${registryUrl}
         """
     }
 }
