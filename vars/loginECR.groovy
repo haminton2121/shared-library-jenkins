@@ -1,5 +1,5 @@
 // vars/awsUtils.groovy
-def call(String region, String imagePath) {
+def call(String credentials, String region, String imagePath) {
 
     // Use withCredentials to bind AWS credentials from Jenkins to environment variables
     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: ${credentials}]]) {
