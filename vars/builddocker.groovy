@@ -1,4 +1,4 @@
-def call(Map config) {
+def call(String registryUrl, String pathImage, String region) {
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
     def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
@@ -17,7 +17,7 @@ def call(Map config) {
         docker build -t ${registryUrl}/${pathImage}:${DPLVERSION} .
         
         # Log in to AWS ECR
-        #/usr/local/bin/aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin ${registryUrl}
+        #/usr/local/bin/aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${registryUrl}
         
         # Push the image to AWS ECR
         docker push ${registryUrl}/${pathImage}:${DPLVERSION}
