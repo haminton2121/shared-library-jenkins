@@ -19,7 +19,5 @@ def call(String registryUrl, String pathImage, String region) {
         # Push the image to AWS ECR
         docker push ${registryUrl}/${pathImage}:${DPLVERSION}
         
-        # Optionally, remove the image after pushing
-        docker rmi ${registryUrl}/${pathImage}:${DPLVERSION}
     """
 }
