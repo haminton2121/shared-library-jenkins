@@ -2,8 +2,6 @@ def call(String registryUrl, String pathImage, String region) {
     def now = new Date()
     def setDate = now.format("yyyy.MM.dd", TimeZone.getTimeZone('UTC'))
     def DPLVERSION = "${setDate}.${BUILD_NUMBER}"
-    def registryUrl = ${registryUrl}
-    def pathImage = ${pathImage}
     def dockerfile = libraryResource "docker/Dockerfile"
     writeFile file: "${WORKSPACE}/Dockerfile", text: dockerfile
     def index = libraryResource "docker/index.html"
