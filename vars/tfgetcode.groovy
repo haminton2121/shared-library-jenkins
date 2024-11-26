@@ -13,3 +13,4 @@ def call(Map config) {
 			  git config --global --remove-section credential
             '''
 }
+}
