@@ -1,8 +1,8 @@
-def call(Map config) {
+def call(Map test) {
     def orgGithub        = 'terraform194920'
-    def branch           = config.branch //Will be defined as an environment name.
-    def githubCredential = config.githubCredential
-    def deploymentUnits  = congfig.deploymentUnits
+    def branch           = test.branch //Will be defined as an environment name.
+    def githubCredential = test.githubCredential
+    def deploymentUnits  = test.deploymentUnits
     def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n"," ")
     def githubRepo = sh(returnStdout: true, script: "echo ${duRepoList} | tr ' ' '\n' | grep ^${deploymentUnit}: | cut -d':' -f2 || echo ''").trim()
     withCredentials([usernamePassword(credentialsId: my-aws-credentials, usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]){
