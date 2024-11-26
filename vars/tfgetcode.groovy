@@ -1,16 +1,26 @@
 def call(Map test) {
     def orgGithub        = 'terraform194920'
-    def branch           = test.branch //Will be defined as an environment name.
-    def githubCredential = test.githubCredential
-    def deploymentUnits  = test.deploymentUnits
-    def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n"," ")
-    def githubRepo = sh(returnStdout: true, script: "echo ${duRepoList} | tr ' ' '\n' | grep ^${deploymentUnit}: | cut -d':' -f2 || echo ''").trim()
-    withCredentials([usernamePassword(credentialsId: my-aws-credentials, usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]){
-            sh'''
-              rm -rf ${githubRepo} || true
-			  git config --global credential.helper '!f() { sleep 1; echo \"username=${gitUsername}\"; echo \"password=${gitPassword}\"; }; f'
-              git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}.git"
-			  git config --global --remove-section credential
-            '''
-}
+    def branch           = test.branch  // Will be defined as an environment name.
+    def deploymentUnits  = test.deploymentUnits  // Fixed typo: "test" should map the deploymentUnits correctly
+    def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n", " ")
+
+    // Using deploymentUnits instead of deploymentUnit (fixed typo)
+    def githubRepo = sh(returnStdout: true, script: "echo ${duRepoList} | tr ' ' '\n' | grep ^${deploymentUnits}: | cut -d':' -f2 || echo ''").trim()
+
+    // Use withCredentials block for GitHub credentials
+    withCredentials([usernamePassword(credentialsId: my-aws-credentials, usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
+        sh '''
+            // Clean up any previous repo folder (if exists)
+            rm -rf ${githubRepo} || true
+
+            // Configure Git to use the credentials securely
+            git config --global credential.helper '!f() { sleep 1; echo "username=${gitUsername}"; echo "password=${gitPassword}"; }; f'
+
+            // Clone the repository from GitLab (use correct GitLab URL format)
+            git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}.git"
+
+            // Remove credential section from Git config for security
+            git config --global --remove-section credential
+        '''
+    }
 }
