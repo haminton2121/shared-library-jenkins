@@ -3,13 +3,20 @@ def call(Map config) {
     def branch           = config.branch  // Will be defined as an environment name.
     def deploymentUnits  = config.deploymentUnits  // Fixed typo: "test" should map the deploymentUnits correctly
     def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n", " ")
+    def githubRepo = sh(script: """
+                        duRepoList="${duRepoList}"  # This is a Groovy variable passed to shell
+                        deploymentUnits="${deploymentUnits}"  # This is another Groovy variable passed to shell
+                        
+                        # Shell script that uses these variables
+                        echo \$duRepoList | tr ' ' '\\n' | grep "^${deploymentUnits}:" | cut -d':' -f2 || echo ''
+                    """, returnStdout: true).trim()
 
     // Using deploymentUnits instead of deploymentUnit (fixed typo)
 
     // Use withCredentials block for GitHub credentials
     withCredentials([usernamePassword(credentialsId: 'hoanguyengit', usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
         sh """
-            githubRepo=$(echo "$duRepoList" | tr ' ' '\n' | grep "^${deploymentUnits}:" | cut -d':' -f2 || echo '')
+            #githubRepo=$(echo "$duRepoList" | tr ' ' '\n' | grep "^${deploymentUnits}:" | cut -d':' -f2 || echo '')
             rm -rf ${githubRepo} || true
             git config --global credential.helper '!f() { sleep 1; echo "username=${gitUsername}"; echo "password=${gitPassword}"; }; f'
             git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}.git"
