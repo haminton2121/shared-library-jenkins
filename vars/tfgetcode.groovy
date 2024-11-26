@@ -9,7 +9,7 @@ def call(Map config) {
             sh'''
               rm -rf ${githubRepo} || true
 			  git config --global credential.helper '!f() { sleep 1; echo \"username=${gitUsername}\"; echo \"password=${gitPassword}\"; }; f'
-              git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}"
+              git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}.git"
 			  git config --global --remove-section credential
             '''
 }
