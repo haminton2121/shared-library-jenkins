@@ -16,7 +16,6 @@ def call(Map config) {
     // Use withCredentials block for GitHub credentials
     withCredentials([usernamePassword(credentialsId: 'hoanguyengit', usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
         sh """
-            #githubRepo=$(echo "$duRepoList" | tr ' ' '\n' | grep "^${deploymentUnits}:" | cut -d':' -f2 || echo '')
             rm -rf ${githubRepo} || true
             git config --global credential.helper '!f() { sleep 1; echo "username=${gitUsername}"; echo "password=${gitPassword}"; }; f'
             git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}.git"
