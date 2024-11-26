@@ -1,7 +1,7 @@
-def call(Map test) {
+def call(Map config) {
     def orgGithub        = 'terraform194920'
-    def branch           = test.branch  // Will be defined as an environment name.
-    def deploymentUnits  = test.deploymentUnits  // Fixed typo: "test" should map the deploymentUnits correctly
+    def branch           = config.branch  // Will be defined as an environment name.
+    def deploymentUnits  = config.deploymentUnits  // Fixed typo: "test" should map the deploymentUnits correctly
     def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n", " ")
 
     // Using deploymentUnits instead of deploymentUnit (fixed typo)
