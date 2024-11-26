@@ -5,7 +5,7 @@ def call(Map config) {
     def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n", " ")
 
     // Using deploymentUnits instead of deploymentUnit (fixed typo)
-    def githubRepo = sh(returnStdout: true, script: "echo ${duRepoList} | tr ' ' '\n' | grep ^${deploymentUnits}: | cut -d':' -f2 || echo ''").trim()
+    def githubRepo = sh(returnStdout: true, script: "echo ${duRepoList} | tr ' ' '\n' | grep ^${deploymentUnits}: | cut -d':' -f2 || echo ''")
 
     // Use withCredentials block for GitHub credentials
     withCredentials([usernamePassword(credentialsId: 'hoanguyengit', usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
