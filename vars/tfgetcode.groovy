@@ -11,9 +11,7 @@ def call(Map config) {
     withCredentials([usernamePassword(credentialsId: 'hoanguyengit', usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
         sh '''
             rm -rf ${githubRepo} || true
-            apk update
-            apk add git
-            #git config --global credential.helper '!f() { sleep 1; echo "username=${gitUsername}"; echo "password=${gitPassword}"; }; f'
+            git config --global credential.helper '!f() { sleep 1; echo "username=${gitUsername}"; echo "password=${gitPassword}"; }; f'
             sudo git config --system user.name "My Name"
             git clone -b ${branch} --single-branch "https://gitlab.com/${orgGithub}/${githubRepo}.git"
 
