@@ -1,6 +1,6 @@
 def call(Map config) {
     def orgGithub        = 'terraform194920'
-    def branch           = config.brach' //Will be defined as an environment name.
+    def branch           = config.brach //Will be defined as an environment name.
     def githubCredential = config.githubCredential
     def deploymentUnits  = congfig.deploymentUnits
     def duRepoList = '''DocumentDB:documentdb'''.replaceAll("\n"," ")
