@@ -8,7 +8,7 @@ def call(Map config) {
     def githubRepo = sh(returnStdout: true, script: "echo ${duRepoList} | tr ' ' '\n' | grep ^${deploymentUnits}: | cut -d':' -f2 || echo ''").trim()
 
     // Use withCredentials block for GitHub credentials
-    withCredentials([usernamePassword(credentialsId: 'my-aws-credentials', usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
+    withCredentials([usernamePassword(credentialsId: 'hoanguyengit', usernameVariable: 'gitUsername', passwordVariable: 'gitPassword')]) {
         sh '''
             // Clean up any previous repo folder (if exists)
             rm -rf ${githubRepo} || true
